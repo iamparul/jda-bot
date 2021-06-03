@@ -11,7 +11,7 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) throws LoginException, InterruptedException {
         builder = new JDABuilder(AccountType.BOT);
-        String Token = "ODQ5NzIyMTQ1NzE3NzQ3Nzgy.YLfTag.Gb91pLtIUIEHLwbv1ggwo5Cvf1k";
+        String Token = "";
         builder.setToken(Token);
         builder.addEventListener(new Main());
 //        builder.buildAsync();
