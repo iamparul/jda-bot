@@ -13,5 +13,10 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'net.dv8tion', name: 'JDA', version: '3.5.0_329'
+//    implementation group: 'net.dv8tion', name: 'JDA', version: '3.8.1_450'
+//    implementation group: 'net.dv8tion', name: 'JDA', version: '3.0.0_193'
+    implementation group: 'net.dv8tion', name: 'JDA', version: '4.1.1_149'
+    implementation group: 'me.duncte123', name: 'botCommons', version: '1.0.78'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.1'
+    implementation group: 'org.json', name: 'json', version: '20160810'
 }
