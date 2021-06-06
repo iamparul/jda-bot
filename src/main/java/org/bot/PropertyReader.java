@@ -1,3 +1,5 @@
+package org.bot;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

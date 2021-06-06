@@ -1,6 +1,7 @@
+package org.bot;
+
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
@@ -13,6 +14,6 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) throws LoginException {
         jda = JDABuilder.createDefault(TOKEN).build();
-        jda.addEventListener(new Commands());
+        jda.addEventListener(new Listener());
     }
 }

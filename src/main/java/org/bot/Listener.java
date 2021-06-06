@@ -1,24 +1,22 @@
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+package org.bot;
+
+import me.duncte123.botcommons.BotCommons;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.jetbrains.annotations.NotNull;
 
 
-public class Commands extends ListenerAdapter {
+public class Listener extends ListenerAdapter {
+    private final CommandManager manager = new CommandManager();
 
-    @Override
+
+    /*@Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String[] args = event.getMessage().getContentRaw().split("\\s");
         String inr = "";
-        if (args[0].equalsIgnoreCase(Main.prefix + "price")) {
+        if (args[0].equalsIgnoreCase(org.bot.Main.prefix + "price")) {
             event.getChannel().sendTyping().queue();
 //            event.getJDA().shutdown();
             try {
@@ -29,18 +27,18 @@ public class Commands extends ListenerAdapter {
             event.getChannel().sendMessage(String.valueOf(inr)).queue();
         }
 
-        if (args[0].equalsIgnoreCase(Main.prefix + "hi")) {
+        if (args[0].equalsIgnoreCase(org.bot.Main.prefix + "hi")) {
             event.getChannel().sendMessage("Hello "+ event.getMember().getEffectiveName()).queue();
         }
-    }
+    }*/
 
 //    public static void main(String[] args) throws IOException {
 //        String coinPrice = getCoinPrice("dogecoin", "inr");
 //        System.out.println("main" + coinPrice);
 //    }
 
-    public static String getCoinPrice(String ids, String currency) throws IOException {
-        URL urlForGetRequest = new URL("https://api.coingecko.com/api/v3/simple/price?ids="+ids+"&vs_currencies="+currency);
+    /*public static String getCoinPrice(String ids, String currency) throws IOException {
+        URL urlForGetRequest = new URL("https://api.coingecko.com/api/v3/simple/price?ids=" + ids + "&vs_currencies=" + currency);
 //        URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/1");
         String readLine = null;
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
@@ -48,7 +46,7 @@ public class Commands extends ListenerAdapter {
 //        conection.setRequestProperty("ids", ids);
 //        conection.setRequestProperty("vs_currencies", currency);
         int responseCode = conection.getResponseCode();
-        String inr="";
+        String inr = "";
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conection.getInputStream()));
@@ -66,5 +64,29 @@ public class Commands extends ListenerAdapter {
             System.out.println("GET NOT WORKED");
         }
         return inr;
+    }*/
+
+    @Override
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        User user = event.getAuthor();
+
+        if (user.isBot() || event.isWebhookMessage()) {
+            return;
+        }
+
+        String prefix = Main.prefix;
+        String raw = event.getMessage().getContentRaw();
+
+        if (raw.equalsIgnoreCase(prefix + "shutdown")
+                && user.getId().equals(PropertyReader.getInstance().getProperty("owner_id"))) {
+            event.getJDA().shutdown();
+            BotCommons.shutdown(event.getJDA());
+
+            return;
+        }
+
+        if(raw.startsWith(prefix)){
+            manager.handle(event);
+        }
     }
 }
