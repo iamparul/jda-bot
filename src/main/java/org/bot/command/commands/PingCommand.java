@@ -8,7 +8,6 @@ public class PingCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         JDA jda = ctx.getJDA();
-
         jda.getRestPing().queue(
                 (ping)->ctx.getChannel()
                 .sendMessageFormat("Reset Ping: %sms\nWs Ping: %sms",ping,jda.getGatewayPing()).queue()

@@ -2,8 +2,10 @@ package org.bot;
 
 import org.bot.command.CommandContext;
 import org.bot.command.ICommand;
+import org.bot.command.commands.HelpCommand;
 import org.bot.command.commands.PingCommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.bot.command.commands.PriceCommand;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class CommandManager {
 
     public CommandManager() {
         addCommand(new PingCommand());
+        addCommand(new HelpCommand(this));
+        addCommand(new PriceCommand(this));
     }
 
     private void addCommand(ICommand cmd) {
